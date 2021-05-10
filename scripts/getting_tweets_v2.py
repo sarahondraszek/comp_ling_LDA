@@ -5,9 +5,13 @@ from searchtweets import ResultStream
 from searchtweets import gen_request_parameters
 import csv
 import pandas
+from pathlib import Path
 
 """ This script is for scraping recent tweets (past 7 days) from twitter directly. 
 Based on: https://pypi.org/project/searchtweets-v2/#description """
+
+# Where to save our results should be defined here
+saving_path = r'/Volumes/My Passport for Mac/tweets/tweets_metadata_08052021.csv'
 
 """ Credentials file for developer accounts, mandatory for the access to API!!! """
 
@@ -20,8 +24,10 @@ there always has to be a certain search keyword, I put 'a' here because of the w
 reach, might be possible to exclude (have to do further investigations in this case.
  results_per_call can be redefined via a .yaml file """
 
-query = searchtweets.gen_request_parameters("a lang:de", results_per_call=100)
-gen_request_parameters(query, start_time="2021-05-06", end_time="2021-05-06")
+# request params for this query
+query = searchtweets.gen_request_parameters("a lang:de", start_time="2021-05-08T00:00",
+                                            end_time="2021-05-08T23:59",
+                                            results_per_call=100)
 
 """ List of tweet dicts, including the ids and the tweet text. Can be directly printed or stored in a file """
 
@@ -36,36 +42,47 @@ gen_request_parameters(query, start_time="2021-05-06", end_time="2021-05-06")
 #                 tweet_file.write(x[y] + '\n')
 
 
-""" Using a ResultStream for getting tweets
-  We can configure the amount of pages/tweets we want to obtain """
+
+def check_files():
+
+    try:
+        my_file = Path(saving_path)
+        my_path = my_file.resolve(strict='True')
+    except FileNotFoundError:
+        return False
+    else:
+        return True
+
 
 
 def collect_tweets_in_files():
-  
-    # Set parameters for ResultStream here
-    max_results = 10000
-    max_pages = 300
-    max_tweets = 15000
 
+    """ Using a ResultStream for getting tweets
+      We can configure the amount of pages/tweets we want to obtain """
 
-    rs = ResultStream(request_parameters=query,
-                        max_results=max_results,
-                        max_pages=max_pages,
-                        **credentials)
+    if not check_files():  # file should not be already existing
 
-    """ Set how many tweets we want to catch """
+        max_results = 10000
+        max_pages = 300
+        max_tweets = 15000
 
-    rs.max_tweets = max_tweets
+        rs = ResultStream(request_parameters=query,
+                          max_results=max_results,
+                          max_pages=max_pages,
+                          **credentials)
 
-    tweets_2 = list(rs.stream())
-    dataframe = pandas.DataFrame(tweets_2)
+        # Set how many tweets we want to catch
+        rs.max_tweets = max_tweets
 
-    """ File name equals the current date """
+        tweets_2 = list(rs.stream())
+        dataframe = pandas.DataFrame(tweets_2)
 
-    csv_file = dataframe.to_csv(r'07052021.csv')
+        csv_file = dataframe.to_csv(saving_path)
+    else:
+        print(FileExistsError, 'File already exists! Please check if you really want to overwrite the file.')
 
-    # with open('./tweets_2.txt', 'w') as tweet_file_2:
-    #     for x in tweets_2:
-    #         for y in x:
-    #             if y == 'text':
-    #                 tweet_file_2.write(x[y] + '\n')
+# with open('./tweets_2.txt', 'w') as tweet_file_2:
+#     for x in tweets_2:
+#         for y in x:
+#             if y == 'text':
+#                 tweet_file_2.write(x[y] + '\n')
