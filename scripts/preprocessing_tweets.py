@@ -1,4 +1,6 @@
 import glob
+import pickle
+
 from nltk.util import pr
 import pandas as pd
 import re
@@ -23,6 +25,7 @@ nlp.max_length = 2000000
 def preprocess_data(file_list):
     docs = []
     for file in file_list:
+        print('Working on:' + file)
         dataframe = pd.read_csv(file, usecols=['text'], lineterminator='\n')  # Datei öffnen
         datastring = dataframe.to_string(index=False)  # String erstellen aus Dataframe
         datastring = re.sub(r"@[\S]*|#", "", datastring)  # Nutzernamen und Hashtag-Zeichen entfernen
@@ -46,9 +49,9 @@ def preprocess_data(file_list):
     return docs
 
 
-""" Create docs from files """
+""" Create docs from files (please remember to set file path correctly """
 
-file_list = glob.glob('./corpus/*.csv')
+file_list = glob.glob('../data/corpus/*.csv')
 docs = preprocess_data(file_list)
 
 """ Lemmatizing words """
@@ -67,20 +70,25 @@ def lemmatizer(docs):
 
 docs = lemmatizer(docs=docs)
 
+""" Save docs list """
+with open('docs', 'wb') as f:
+    pickle.dump(docs, f)
 
 """ Make gensim.Dictionary and filter extremes """
 
 dictionary = Dictionary(docs)
 dictionary.filter_extremes(no_below=3, no_above=0.5)
 
+""" Save our dictionary to a file so we can load it in the LDA script """
+
+dictionary.save('../data/tweet_dictionary')
+
 
 """ BOW representation """
 
-corpus = [dictionary.doc2bow(doc) for doc in docs]
 
-print('Number of unique tokens: %d' % len(dictionary))
-print('Number of documents: %d' % len(corpus))
+def make_bow_corpus(input_dictionary, docs):
+    return [input_dictionary.doc2bow(doc) for doc in docs]
+
 
 print(time.process_time() - start)
-
-
