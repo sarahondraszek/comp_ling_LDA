@@ -1,5 +1,4 @@
 import pickle
-
 import gensim
 from gensim.models import LdaModel
 from gensim.corpora import Dictionary
@@ -8,21 +7,27 @@ from pprint import pprint
 
 """Load our tweet dictionary"""
 
-tweet_dictionary = Dictionary.load('../data/tweet_dictionary')
-with open('../data/docs', 'rb') as f:
+tweet_dictionary = Dictionary.load('/Users/sarahreb/PycharmProjects/comp_ling_LDA/tweet_dictionary')
+with open('/Users/sarahreb/PycharmProjects/comp_ling_LDA/docs', 'rb') as f:
     docs = pickle.load(f)
 
 """Make BOW representation of our corpus """
 
 corpus = make_bow_corpus(tweet_dictionary, docs)
+
+""" Save BOW corpus """
+#
+# with open('bow_corpus', 'wb') as f:
+#     pickle.dump(corpus, f)
+
 print('Number of unique tokens: %d' % len(tweet_dictionary))
 print('Number of documents: %d' % len(corpus))
 
 """Set training parameters."""
-num_topics = 10  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
-chunk_size = 3  # Numbers of documents fed into the training algorithm (we have 7)
-passes = 20  # Number of times trained on the entire corpus
-iterations = 40  # Number of loops over each document
+num_topics = 5  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
+chunk_size = 7  # Numbers of documents fed into the training algorithm (we have 7)
+passes = 25  # Number of times trained on the entire corpus
+iterations = 60  # Number of loops over each document
 eval_every = None  # Don't evaluate model perplexity, takes too much time.
 
 """ Make a index to word dictionary."""
@@ -44,6 +49,11 @@ model = LdaModel(
     eval_every=eval_every
 )
 
+""" Save model so we can load it later - only needed if you need to train the model from anew """
+# model_file = 'LDA_model_v1'
+# model.save(model_file)
+
+""" Tests """
 # Top topics
 top_topics = model.top_topics(corpus)  # , num_words=20) Default value = 20, input is our corpus in BOW format
 
@@ -60,5 +70,3 @@ pprint(top_topics)
 1. no_above and no_below parameters in filter_extremes method.
 2. Adding bi-, trigrams or even higher order n-grams.
 3. Consider whether using a hold-out set or cross-validation is the way to go for you."""
-
-""" Visualization """
