@@ -3,16 +3,15 @@ import gensim
 import pyLDAvis.gensim_models
 import pyLDAvis
 from gensim.models import LdaModel
-
 """ Load corpus, dictionary  """
 
-with open('bow_corpus', 'rb') as input_file:
+with open('./data/bow_corpus', 'rb') as input_file:
     corpus = pickle.load(input_file)
 
-tweet_dictionary = gensim.corpora.Dictionary.load('tweet_dictionary')
+tweet_dictionary = gensim.corpora.Dictionary.load('./data/tweet_dictionary')
 
-"""Load model"""
-model = LdaModel.load('./model/LDA_model_v1')
+""" Load model """
+model = LdaModel.load('./data/model/LDA_model_v1')
 
 """ Visualization """
 

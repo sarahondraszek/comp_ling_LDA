@@ -3,14 +3,14 @@ import glob
 import pickle
 from gensim.corpora import Dictionary
 
-file_list = glob.glob('./corpus/*.csv')
-docs = preprocess_data(file_list)
+file_list = glob.glob('./data/corpus/*.csv')
+docs = preprocess_data(input_file_list=file_list)
 
 docs = lemmatizer(input_docs=docs)
 
 """ Save docs list """
 
-with open('docs', 'wb') as f:
+with open('./data/docs', 'wb') as f:
     pickle.dump(docs, f)
 
 """ Make gensim.Dictionary and filter extremes """
@@ -20,4 +20,4 @@ dictionary.filter_extremes(no_below=3, no_above=0.9)
 
 """ Save our dictionary to a file so we can load it in the LDA script """
 
-dictionary.save('./tweet_dictionary')
+dictionary.save('./data/tweet_dictionary')

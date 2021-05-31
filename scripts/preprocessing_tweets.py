@@ -1,5 +1,7 @@
 import glob
 import pickle
+
+from gensim.models import Phrases
 from nltk.util import pr
 import pandas as pd
 import re
@@ -70,6 +72,29 @@ def lemmatizer(input_docs):
             temp_list.append(word.lemma_)
         lemmatized_words.append(temp_list)
     return lemmatized_words
+
+
+def ngrams(input_docs):
+    """
+    Add bigrams (and possibly trigrams) to docs (only ones that appear 20 times or more).
+    Uncomment trigram lines for trigram addition.
+
+    :param input_docs: input docs file (gensim format)
+    :return: docs file (list of lists) with appended ngrams
+    """
+    output_docs = input_docs
+    bigram = Phrases(output_docs, min_count=20)
+    # trigram = Phrases(bigram[output_docs], min_count=20)
+
+    for idx in range(len(output_docs)):
+        for bigram_ in bigram[output_docs[idx]]:
+            if '' in bigram_:
+                # Token is a bigram, add to document.
+                output_docs[idx].append(bigram_)
+                # for token in trigram[bigram[bigram_]]:
+                #     if '' in token:
+                #         output_docs[idx].append(token)
+    return output_docs
 
 
 def make_bow_corpus(input_dictionary, input_docs):

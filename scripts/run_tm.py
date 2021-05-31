@@ -2,29 +2,34 @@ import pickle
 import gensim
 from gensim.models import LdaModel
 from gensim.corpora import Dictionary
-from preprocessing_tweets import make_bow_corpus
+from preprocessing_tweets import ngrams, make_bow_corpus
 from pprint import pprint
 
 """Load our tweet dictionary"""
 
 tweet_dictionary = Dictionary.load('/Users/sarahreb/PycharmProjects/comp_ling_LDA/tweet_dictionary')
-with open('/Users/sarahreb/PycharmProjects/comp_ling_LDA/docs', 'rb') as f:
+with open('./data/docs', 'rb') as f:
     docs = pickle.load(f)
+
+
+""" Ngrams """
+ngram_docs = ngrams(input_docs=docs)
+
 
 """Make BOW representation of our corpus """
 
-corpus = make_bow_corpus(tweet_dictionary, docs)
+corpus = make_bow_corpus(tweet_dictionary, ngram_docs)
 
 """ Save BOW corpus """
-#
-# with open('bow_corpus', 'wb') as f:
-#     pickle.dump(corpus, f)
+
+with open('./data/bow_corpus', 'wb') as f:
+    pickle.dump(corpus, f)
 
 print('Number of unique tokens: %d' % len(tweet_dictionary))
 print('Number of documents: %d' % len(corpus))
 
 """Set training parameters."""
-num_topics = 5  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
+num_topics = 10  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
 chunk_size = 7  # Numbers of documents fed into the training algorithm (we have 7)
 passes = 25  # Number of times trained on the entire corpus
 iterations = 60  # Number of loops over each document
@@ -50,8 +55,8 @@ model = LdaModel(
 )
 
 """ Save model so we can load it later - only needed if you need to train the model from anew """
-# model_file = 'LDA_model_v1'
-# model.save(model_file)
+model_file = 'LDA_model_v1'
+model.save(model_file)
 
 """ Tests """
 # Top topics
