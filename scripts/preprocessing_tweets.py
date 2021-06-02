@@ -31,6 +31,7 @@ def preprocess_data(input_file_list):
     :param input_file_list: List of files (tweet corpus)
     :return: List of documents that are each represented as lists of tokens
     """
+    stopwords_ger = nltk.corpus.stopwords.words("german")  # Liste der Stoppwörter
     temp_docs = []
     for file in input_file_list:
         print('Working on:' + file)
@@ -45,7 +46,6 @@ def preprocess_data(input_file_list):
 
         token = nltk.wordpunct_tokenize(datastring.lower())  # Tokeniserung + nur Kleinschreibung
 
-        stopwords_ger = nltk.corpus.stopwords.words("german")  # Liste der Stoppwörter
         removed_stopwords = [w for w in token if not w in stopwords_ger]  # Stoppwörter entfernen
         text = [w for w in removed_stopwords if len(w) > 2]  # Wörter < 2 Buchstaben entfernen
 
