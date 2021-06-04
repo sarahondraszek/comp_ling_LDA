@@ -13,6 +13,7 @@ with open('./data/docs', 'rb') as f:
 
 
 """ Ngrams """
+
 ngram_docs = ngrams(input_docs=docs)
 
 
@@ -29,7 +30,7 @@ print('Number of unique tokens: %d' % len(tweet_dictionary))
 print('Number of documents: %d' % len(corpus))
 
 """Set training parameters."""
-num_topics = 10  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
+num_topics = 5  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
 chunk_size = 7  # Numbers of documents fed into the training algorithm (we have 7)
 passes = 25  # Number of times trained on the entire corpus
 iterations = 60  # Number of loops over each document
