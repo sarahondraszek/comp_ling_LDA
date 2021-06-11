@@ -3,7 +3,7 @@ import glob
 import pickle
 from gensim.corpora import Dictionary
 
-file_list = glob.glob('./data/corpus/*.csv')
+file_list = glob.glob('./corpus/*.csv')
 docs = preprocess_data(input_file_list=file_list)
 
 docs = lemmatizer(input_docs=docs)
