@@ -42,7 +42,7 @@ def preprocess_data(input_file_list):
         datastring = re.sub(r"[0-9]*", "", datastring)  # Zahlen entfernen
         datastring = re.sub(r"\\n", " ", datastring)  # Zeilenumbruchmarker entfernen
         datastring = re.sub(r"\W", " ", datastring)  # Satzzeichen entfernen
-        datastring = re.sub("RT|NaN|via", "", datastring)  # Entfernen von twitterspezifiscehen Markern
+        datastring = re.sub(r"RT|NaN|via", "", datastring)  # Entfernen von twitterspezifiscehen Markern
 
         token = nltk.wordpunct_tokenize(datastring.lower())  # Tokeniserung + nur Kleinschreibung
 

@@ -7,8 +7,8 @@ from pprint import pprint
 
 """Load our tweet dictionary"""
 
-tweet_dictionary = Dictionary.load('../data/tweet_dictionary')
-with open('../data/docs', 'rb') as f:
+tweet_dictionary = Dictionary.load('./../data/tweet_dictionary')
+with open('./../data/docs', 'rb') as f:
     docs = pickle.load(f)
 
 
@@ -22,7 +22,7 @@ corpus = make_bow_corpus(tweet_dictionary, ngram_docs)
 
 """ Save BOW corpus """
 
-with open('../data/bow_corpus', 'wb') as f:
+with open('./../data/bow_corpus', 'wb') as f:
     pickle.dump(corpus, f)
 
 print('Number of unique tokens: %d' % len(tweet_dictionary))
@@ -55,7 +55,7 @@ model = LdaModel(
 )
 
 """ Save model so we can load it later - only needed if you need to train the model from anew """
-model_file = 'LDA_model_v1'
+model_file = '.././data/model/LDA_model_v1'
 model.save(model_file)
 
 """ Tests """

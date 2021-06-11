@@ -13,13 +13,13 @@ def visualize_data(bow_corpus, tweet_dictionary, lda_model):
 
 
 """ Load corpus, dictionary  """
-with open('./data/bow_corpus', 'rb') as input_file:
+with open('../data/bow_corpus', 'rb') as input_file:
     bow_corpus_input = pickle.load(input_file)
 
-tweet_dictionary_input = gensim.corpora.Dictionary.load('./data/tweet_dictionary')
+tweet_dictionary_input = gensim.corpora.Dictionary.load('../data/tweet_dictionary')
 
 """ Load model """
-model = LdaModel.load('./data/model/LDA_model_v1')
+model = LdaModel.load('../data/model/LDA_model_v1')
 
 """ TEST """
 visualize_data(bow_corpus_input, tweet_dictionary_input, model)
