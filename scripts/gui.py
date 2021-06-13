@@ -285,8 +285,8 @@ class StartPage(tk.Frame):
         canvas = Canvas(self, height=HEIGHT, width=WIDTH)
         canvas.pack()
 
-        background_label = Label(self, bg = "#7ECFEC")
-        background_label.place(relwidth=1, relheight=1)
+        background_frame = Frame(self, bg="#7ECFEC")
+        background_frame.place(relwidth=1, relheight=1)
 
         upper_frame = Frame(self, bg="Black")
         upper_frame.place(relx=0.5, rely=0.02, relwidth=0.9, relheight=0.07, anchor='n')
@@ -296,7 +296,7 @@ class StartPage(tk.Frame):
         middle_frame = Frame(self, bg='Black')
         middle_frame.place(relx=0.5, rely=0.1, relwidth=0.9, relheight=0.8, anchor='n')
         textlabel = Label(middle_frame, text="This GUI will help you to perform LDA Topic Modeling. \n \nFirst you will be asked "
-                                             "to select your corpus.\n \n  After that you can specify the parameters, e.g. the "
+                                             "to select your (german) corpus.\n \n  After that you can specify the parameters, e.g. the "
                                              "number of topics. \n \n \n Click  'Got it'  to continue. \n \n Good luck!",
                           bg='white', font=('Modern', 12))
         textlabel.place(relwidth=1, relheight=1)
@@ -318,8 +318,8 @@ class ChooseCorpus(tk.Frame):
         canvas = Canvas(self, height=HEIGHT, width=WIDTH)
         canvas.pack()
 
-        background_label = Label(self, bg="#7ECFEC")
-        background_label.place(relwidth=1, relheight=1)
+        background_frame = Frame(self, bg="#7ECFEC")
+        background_frame.place(relwidth=1, relheight=1)
 
         upper_frame = Frame(self, bg="Black")
         upper_frame.place(relx=0.5, rely=0.02, relwidth=0.9, relheight=0.07, anchor='n')
@@ -352,8 +352,8 @@ class Preprocess(tk.Frame):
         canvas = Canvas(self, height=HEIGHT, width=WIDTH)
         canvas.pack()
 
-        background_label = Label(self, bg="#7ECFEC")
-        background_label.place(relwidth=1, relheight=1)
+        background_frame = Frame(self, bg="#7ECFEC")
+        background_frame.place(relwidth=1, relheight=1)
 
         upper_frame = Frame(self, bg="Black")
         upper_frame.place(relx=0.5, rely=0.02, relwidth=0.9, relheight=0.07, anchor='n')
@@ -390,8 +390,8 @@ class SelectParams(tk.Frame):
         canvas = Canvas(self, height=HEIGHT, width=WIDTH)
         canvas.pack()
 
-        background_label = Label(self, bg="#7ECFEC")
-        background_label.place(relwidth=1, relheight=1)
+        background_frame = Frame(self, bg="#7ECFEC")
+        background_frame.place(relwidth=1, relheight=1)
 
         upper_frame = Frame(self, bg="Black")
         upper_frame.place(relx=0.5, rely=0.02, relwidth=0.9, relheight=0.07, anchor='n')
@@ -459,8 +459,8 @@ class ShowTopics(tk.Frame):
         canvas = Canvas(self, height=HEIGHT, width=WIDTH)
         canvas.pack()
 
-        background_label = Label(self, bg="#7ECFEC")
-        background_label.place(relwidth=1, relheight=1)
+        background_frame = Frame(self, bg="#7ECFEC")
+        background_frame.place(relwidth=1, relheight=1)
 
         upper_frame = Frame(self, bg="Black")
         upper_frame.place(relx=0.5, rely=0.02, relwidth=0.9, relheight=0.07, anchor='n')
@@ -495,8 +495,8 @@ class End(tk.Frame):
         canvas = Canvas(self, height=HEIGHT, width=WIDTH)
         canvas.pack()
 
-        background_label = Label(self, bg="#7ECFEC")
-        background_label.place(relwidth=1, relheight=1)
+        background_frame = Frame(self, bg="#7ECFEC")
+        background_frame.place(relwidth=1, relheight=1)
 
         upper_frame = Frame(self, bg="Black")
         upper_frame.place(relx=0.5, rely=0.02, relwidth=0.9, relheight=0.07, anchor='n')
@@ -519,10 +519,10 @@ class End(tk.Frame):
         buttonparams.place(relx=0.3, rely=0.2, relwidth=0.4, relheight=0.1)
         button = Button(middle_frame, text="Delete saved data", bg='#ff4d4d', fg='black', borderless=0, font=40,
                         command=lambda: delete())
-        button.place(relx=0.36, rely=0.62, relheight=0.2)
+        button.place(relx=0.35, rely=0.62, relwidth=0.3, relheight=0.2)
         buttoncorpus= Button(middle_frame, text='Choose New Corpus', bg='white', fg='black', borderless=0, font=40,
                          command=lambda: controller.show_frame("ChooseCorpus"))
-        buttoncorpus.place(relx=0.32, rely =0.85, relwidth=0.4, relheight=0.1)
+        buttoncorpus.place(relx=0.3, rely =0.85, relwidth=0.4, relheight=0.1)
 
 
         lower_frame = Frame(self, bg='Black', bd=5)
