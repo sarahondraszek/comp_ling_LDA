@@ -50,6 +50,18 @@ checks for valid user entries for the parameters
 def arevalid(topics, below, above, chunksize, passes, iterations):
     m = ""
     valid = False
+    if iterations == "":
+        iterations = "400"
+    if passes == "":
+        passes = "20"
+    if chunksize == "":
+        chunksize = "2000"
+    if above == "":
+        above = "0.5"
+    if below == "":
+        below = "1"
+    if topics == "":
+        topics = "10"
     try:
         int(iterations)
         if int(iterations) <= 0:
@@ -58,6 +70,7 @@ def arevalid(topics, below, above, chunksize, passes, iterations):
         else:
             valid6 = True
     except:
+
         m = "Iterations has to be an integer"
         valid6 = False
 
@@ -69,6 +82,7 @@ def arevalid(topics, below, above, chunksize, passes, iterations):
         else:
             valid5 = True
     except:
+
         m = "Passes has to be an integer"
         valid5 = False
 
@@ -80,6 +94,7 @@ def arevalid(topics, below, above, chunksize, passes, iterations):
         else:
             valid4 = True
     except:
+
         m = "Chunk Size has to be an integer"
         valid4 = False
 
@@ -91,6 +106,7 @@ def arevalid(topics, below, above, chunksize, passes, iterations):
         else:
             valid1 = True
     except:
+
         m = "No_above has to be a number between 0 and 1"
         valid1 = False
 
@@ -102,6 +118,7 @@ def arevalid(topics, below, above, chunksize, passes, iterations):
         else:
             valid2 = True
     except:
+
         m = "No_below has to be an integer"
         valid2 = False
 
@@ -113,11 +130,12 @@ def arevalid(topics, below, above, chunksize, passes, iterations):
         else:
             valid3 = True
     except:
+
         m = "Nr. of Topics has to be an integer"
         valid3 = False
 
 
-    return m, valid1&valid2&valid3&valid4&valid5&valid6
+    return m, valid1&valid2&valid3&valid4&valid5&valid6, topics, below, above, chunksize, passes, iterations
 
 """
 deletes saved data so you can use a new corpus
@@ -155,7 +173,7 @@ If the parameters aren't valid an error message pops up
 """
 def run_tm(topics, below, above, chunksize, passes, iterations):
 
-    m, valid = arevalid(topics, below, above, chunksize, passes, iterations)
+    m, valid, topics1, below1, above1, chunksize1, passes1, iterations1 = arevalid(topics, below, above, chunksize, passes, iterations)
     if not valid:
 
         fehlerfenster = Toplevel()
@@ -171,7 +189,7 @@ def run_tm(topics, below, above, chunksize, passes, iterations):
             docs = pickle.load(f)
 
         tweet_dictionary = Dictionary(docs)
-        tweet_dictionary.filter_extremes(no_below=int(below), no_above=float(above))
+        tweet_dictionary.filter_extremes(no_below=int(below1), no_above=float(above1))
         tweet_dictionary.save('../data/tweet_dictionary')
 
         ngram_docs = ngrams(input_docs=docs)
@@ -181,10 +199,10 @@ def run_tm(topics, below, above, chunksize, passes, iterations):
         print('Number of unique tokens: %d' % len(tweet_dictionary))
         print('Number of documents: %d' % len(corpus))
         """Training parameters."""
-        num_topics = int(topics)  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
-        chunk_size = int(chunksize)  # Numbers of documents fed into the training algorithm (we have 7)
-        passes = int(passes)  # Number of times trained on the entire corpus
-        iterations = int(iterations)  # Number of loops over each document
+        num_topics = int(topics1)  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
+        chunk_size = int(chunksize1)  # Numbers of documents fed into the training algorithm (we have 7)
+        passes = int(passes1)  # Number of times trained on the entire corpus
+        iterations = int(iterations1)  # Number of loops over each document
         eval_every = None  # Don't evaluate model perplexity, takes too much time.
 
         """ Make a index to word dictionary."""
