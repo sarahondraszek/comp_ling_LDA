@@ -50,18 +50,7 @@ checks for valid user entries for the parameters
 def arevalid(topics, below, above, chunksize, passes, iterations):
     m = ""
     valid = False
-    if iterations == "":
-        iterations = "400"
-    if passes == "":
-        passes = "20"
-    if chunksize == "":
-        chunksize = "2000"
-    if above == "":
-        above = "0.5"
-    if below == "":
-        below = "1"
-    if topics == "":
-        topics = "10"
+
     try:
         int(iterations)
         if int(iterations) <= 0:
@@ -135,7 +124,7 @@ def arevalid(topics, below, above, chunksize, passes, iterations):
         valid3 = False
 
 
-    return m, valid1&valid2&valid3&valid4&valid5&valid6, topics, below, above, chunksize, passes, iterations
+    return m, valid1&valid2&valid3&valid4&valid5&valid6
 
 """
 deletes saved data so you can use a new corpus
@@ -173,7 +162,7 @@ If the parameters aren't valid an error message pops up
 """
 def run_tm(topics, below, above, chunksize, passes, iterations):
 
-    m, valid, topics1, below1, above1, chunksize1, passes1, iterations1 = arevalid(topics, below, above, chunksize, passes, iterations)
+    m, valid = arevalid(topics, below, above, chunksize, passes, iterations)
     if not valid:
 
         fehlerfenster = Toplevel()
@@ -189,7 +178,7 @@ def run_tm(topics, below, above, chunksize, passes, iterations):
             docs = pickle.load(f)
 
         tweet_dictionary = Dictionary(docs)
-        tweet_dictionary.filter_extremes(no_below=int(below1), no_above=float(above1))
+        tweet_dictionary.filter_extremes(no_below=int(below), no_above=float(above))
         tweet_dictionary.save('../data/tweet_dictionary')
 
         ngram_docs = ngrams(input_docs=docs)
@@ -199,10 +188,10 @@ def run_tm(topics, below, above, chunksize, passes, iterations):
         print('Number of unique tokens: %d' % len(tweet_dictionary))
         print('Number of documents: %d' % len(corpus))
         """Training parameters."""
-        num_topics = int(topics1)  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
-        chunk_size = int(chunksize1)  # Numbers of documents fed into the training algorithm (we have 7)
-        passes = int(passes1)  # Number of times trained on the entire corpus
-        iterations = int(iterations1)  # Number of loops over each document
+        num_topics = int(topics)  # Number of topics, here relatively low so we can interpret them more easily -> can be set higher
+        chunk_size = int(chunksize)  # Numbers of documents fed into the training algorithm (we have 7)
+        passes = int(passes)  # Number of times trained on the entire corpus
+        iterations = int(iterations)  # Number of loops over each document
         eval_every = None  # Don't evaluate model perplexity, takes too much time.
 
         """ Make a index to word dictionary."""
@@ -419,37 +408,49 @@ class SelectParams(tk.Frame):
         middle_frame = Frame(self, bg='White')
         middle_frame.place(relx=0.5, rely=0.1, relwidth=0.9, relheight=0.8, anchor='n')
         label = Label(middle_frame, text="Select your parameters and click 'Run the model'. \n No_above needs to be a float"
-                                         " between 0 and 1. \n The other parameters should be integers.")
+                                         " between 0 and 1. \n The other parameters should be integers. ")
         label.place(rely=0.05, relwidth=1, relheight=0.2)
 
         label1 = Label(middle_frame, text = "Number of Topics:")
         label1.place(rely=0.25, relwidth=0.5, relheight=0.1)
         entry1 = Entry(middle_frame)
         entry1.place(relx=0.5,rely=0.25, relwidth=0.3, relheight=0.1)
+        entry1.insert(END, '10')
+        entry1.place(relx=0.5,rely=0.25, relwidth=0.3, relheight=0.1)
 
         label2 = Label(middle_frame, text="No Below:")
         label2.place(rely=0.35, relwidth=0.5, relheight=0.1)
         entry2 = Entry(middle_frame)
+        entry2.place(relx=0.5, rely=0.35, relwidth=0.3, relheight=0.1)
+        entry2.insert(END, '1')
         entry2.place(relx=0.5, rely=0.35, relwidth=0.3, relheight=0.1)
 
         label3 = Label(middle_frame, text="No Above:")
         label3.place(rely=0.45, relwidth=0.5, relheight=0.1)
         entry3 = Entry(middle_frame)
         entry3.place(relx=0.5, rely=0.45, relwidth=0.3, relheight=0.1)
+        entry3.insert(END, '0.5')
+        entry3.place(relx=0.5, rely=0.45, relwidth=0.3, relheight=0.1)
 
         label4 = Label(middle_frame, text="Chunk Size:")
         label4.place(rely=0.55, relwidth=0.5, relheight=0.1)
         entry4 = Entry(middle_frame)
+        entry4.place(relx=0.5, rely=0.55, relwidth=0.3, relheight=0.1)
+        entry4.insert(END, '2000')
         entry4.place(relx=0.5, rely=0.55, relwidth=0.3, relheight=0.1)
 
         label5 = Label(middle_frame, text="Passes:")
         label5.place(rely=0.65, relwidth=0.5, relheight=0.1)
         entry5 = Entry(middle_frame)
         entry5.place(relx=0.5, rely=0.65, relwidth=0.3, relheight=0.1)
+        entry5.insert(END, '20')
+        entry5.place(relx=0.5, rely=0.65, relwidth=0.3, relheight=0.1)
 
         label6 = Label(middle_frame, text="Iterations:")
         label6.place(rely=0.75, relwidth=0.5, relheight=0.1)
         entry6 = Entry(middle_frame)
+        entry6.place(relx=0.5, rely=0.75, relwidth=0.3, relheight=0.1)
+        entry6.insert(END, '400')
         entry6.place(relx=0.5, rely=0.75, relwidth=0.3, relheight=0.1)
 
         low_frame = Frame(self, bg='White', bd=5)
@@ -562,3 +563,4 @@ if __name__ == "__main__":
     with open('save.txt', 'w') as f:
         for file in files:
             f.write(file + ',')
+
