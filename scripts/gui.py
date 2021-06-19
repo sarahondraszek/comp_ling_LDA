@@ -33,15 +33,19 @@ def addFile(frame):
     for widget in frame.winfo_children():
         widget.destroy()
 
-    filename = filedialog.askopenfilename(initialdir="/", title="Select File", filetypes=(("CSV-Files", "*.csv"), ("all files", "*.*")))
-    files.append(filename)
-    print(filename)
+    filenames = filedialog.askopenfilenames(initialdir="/", title="Select File", filetypes=(("CSV-Files", "*.csv"), ("all files", "*.*")))
+    for file in filenames:
+        files.append(file)
+
+    startlabel = Label(frame, text="You selected:\n")
+    startlabel.pack()
+
     with open('save.txt', 'w') as f:
         for file in files:
             f.write(file + '\n')
-    for file in files:
-        label = Label(frame, text="You selected:\n"+file, bg="white")
-        label.place(relwidth=1, relheight=1)
+            label = Label(frame, text=file + "\n")
+            label.pack()
+
 
 """
 checks for valid user entries for the parameters
@@ -333,7 +337,7 @@ class ChooseCorpus(tk.Frame):
         welcomelabel = Label(upper_frame, text="Corpus", fg="Black", font=("Modern", 15, "bold"))
         welcomelabel.place(relwidth=1, relheight=1)
 
-        middle_frame = Frame(self, bg='Black')
+        middle_frame = Frame(self, bg='white')
         middle_frame.place(relx=0.5, rely=0.1, relwidth=0.9, relheight=0.8, anchor='n')
         textlabel = Label(middle_frame, text="If this is your first time performing LDA, \n please select some csv files"
                                              " to build your corpus.\n Click 'Select File' to do so. \n \n"
@@ -342,7 +346,7 @@ class ChooseCorpus(tk.Frame):
 
         lower_frame = Frame(self, bg='Black', bd=5)
         lower_frame.place(relx=0.5, rely=0.92, relwidth=0.5, relheight=0.07, anchor='n')
-        button1 = Button(lower_frame, text='Select File', bg='white', fg='black', borderless=0, font=40,
+        button1 = Button(lower_frame, text='Select Files', bg='white', fg='black', borderless=0, font=40,
                         command=lambda: addFile(middle_frame))
         button1.place(relx=0, relwidth=0.5, relheight=1)
         button2 = Button(lower_frame, text='Done', bg='white', fg='black', borderless=0, font=40,
@@ -563,4 +567,3 @@ if __name__ == "__main__":
     with open('save.txt', 'w') as f:
         for file in files:
             f.write(file + ',')
-
