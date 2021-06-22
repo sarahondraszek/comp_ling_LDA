@@ -340,7 +340,7 @@ class ChooseCorpus(tk.Frame):
         middle_frame = Frame(self, bg='white')
         middle_frame.place(relx=0.5, rely=0.1, relwidth=0.9, relheight=0.8, anchor='n')
         textlabel = Label(middle_frame, text="If this is your first time performing LDA, \n please select some csv files"
-                                             " to build your corpus.\n Click 'Select File' to do so. \n \n"
+                                             " to build your corpus.\n Click 'Select Files' to do so. \n \n"
                                              "Otherwise your saved data will be used, \n so you can skip this step and the preprocessing.", bg='white', font=('Modern', 12))
         textlabel.place(relwidth=1, relheight=1)
 
@@ -426,7 +426,7 @@ class SelectParams(tk.Frame):
         label2.place(rely=0.35, relwidth=0.5, relheight=0.1)
         entry2 = Entry(middle_frame)
         entry2.place(relx=0.5, rely=0.35, relwidth=0.3, relheight=0.1)
-        entry2.insert(END, '1')
+        entry2.insert(END, '2')
         entry2.place(relx=0.5, rely=0.35, relwidth=0.3, relheight=0.1)
 
         label3 = Label(middle_frame, text="No Above:")
