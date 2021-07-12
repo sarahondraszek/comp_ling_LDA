@@ -13,6 +13,9 @@ Python 3.9
 * pickle 0.7.5
 * pyLDAvis 2.1.2
 
+## Benutzerhandbuch und Dokumentation
+
+Ein entsprechendes Benutzerhandbuch und die Dokumentation des Projektfortschritts können den gleich benannten Dokumenten entnommen werden.
 
 ## Mitwirkende
 
