@@ -18,7 +18,7 @@ start = time.process_time()
 
 """ Spacy installments """
 
-# spacy.cli.download('de_core_news_md')
+spacy.cli.download('de_core_news_md')
 nlp = spacy.load('de_core_news_md')
 nlp.max_length = 2000000
 

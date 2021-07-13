@@ -31,6 +31,7 @@ query = searchtweets.gen_request_parameters("a lang:de", start_time="2021-05-08T
 
 """ List of tweet dicts, including the ids and the tweet text. Can be directly printed or stored in a file """
 
+
 # tweets = collect_results(query,
 #                          max_tweets=100,
 #                          result_stream_args=credentials)
@@ -42,9 +43,7 @@ query = searchtweets.gen_request_parameters("a lang:de", start_time="2021-05-08T
 #                 tweet_file.write(x[y] + '\n')
 
 
-
 def check_files():
-
     try:
         my_file = Path(saving_path)
         my_path = my_file.resolve(strict='True')
@@ -54,13 +53,11 @@ def check_files():
         return True
 
 
-
 def collect_tweets_in_files():
-
     """ Using a ResultStream for getting tweets
       We can configure the amount of pages/tweets we want to obtain """
 
-    if not check_files():  # file should not be already existing
+    if not check_files():  # file should not already be existing
 
         max_results = 10000
         max_pages = 300
