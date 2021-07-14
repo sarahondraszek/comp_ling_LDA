@@ -17,6 +17,10 @@ Python 3.9
 
 Ein entsprechendes Benutzerhandbuch und die Dokumentation des Projektfortschritts können den gleich benannten Dokumenten entnommen werden.
 
+## Anmerkungen
+
+Das "funktionalere" Skript zur Tweet-Beschaffung ist ***getting_tweets_v2***.
+
 ## Mitwirkende
 
 Julia Karst, Tobias Niedballa, Sarah Ondraszek, Julia Weyer
